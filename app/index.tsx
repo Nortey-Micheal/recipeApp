@@ -1,6 +1,7 @@
-import { ImageSourcePropType, SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { ImageSourcePropType, SafeAreaView, StyleSheet, Text, useColorScheme, View } from 'react-native'
 import React from 'react'
 import Recipe from '../components/recipe-button';
+import { Colors } from '../constants/Colors';
 const Waakye: ImageSourcePropType = require('../assets/img/waakye.jpg');
 const Kokonte: ImageSourcePropType = require('../assets/img/kokonte.jpg');
 const OmoTuo: ImageSourcePropType = require('../assets/img/omotuo.jpg');
@@ -36,10 +37,12 @@ const recipes: RecipeType[] = [
 ]
 
 const Home = () => {
+    const colorScheme = useColorScheme()
+    const theme = Colors[colorScheme!] ?? Colors.light
   return (
-    <SafeAreaView style={{flex: 1, marginTop: 40}}>
-        <View>
-            <Text style={styles.text}>Recipes</Text>
+    <SafeAreaView style={{flex: 1, paddingTop: 40,backgroundColor: theme.background}}>
+        <View style={[{backgroundColor: theme.background}]}>
+            <Text style={[styles.text,{color: theme.textPrimary}]}>Recipes</Text>
             <View style={styles.recipeContainer}>
                 {
                     recipes.map(recipe => (

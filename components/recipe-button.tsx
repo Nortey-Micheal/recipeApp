@@ -1,15 +1,18 @@
-import { Image, Pressable, StyleSheet, Text } from 'react-native'
+import { Image, Pressable, StyleSheet, Text, useColorScheme } from 'react-native'
 import React from 'react'
 import { navigate } from 'expo-router/build/global-state/routing'
 import { RecipeType } from '../app'
 import { useRouter } from 'expo-router'
+import { Colors } from '../constants/Colors'
 
 const Recipe = ({recipe}: {recipe: RecipeType}) => {
     const navigate = useRouter()
+    const colorScheme = useColorScheme()
+    const theme = Colors[colorScheme!] ?? Colors.light
   return (
-    <Pressable style={styles.pressable} onPress={() => navigate.navigate(`${recipe.route}`)}>
+    <Pressable style={[styles.pressable,{backgroundColor: theme.background, boxShadow: ` 1px 2px 8px ${theme.textSecondary}`}]} onPress={() => navigate.navigate(`${recipe.route}`)}>
       <Image style={styles.image} source={recipe.image}/>
-      <Text style={styles.text} >{recipe.title}</Text>
+      <Text style={[styles.text,{color: theme.textPrimary}]} >{recipe.title}</Text>
     </Pressable>
   )
 }
@@ -22,8 +25,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 5,
         height: '20%',
-        backgroundColor: '#ffffff',
-        boxShadow: '4px 4px 8px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden',
         fontFamily: 'Arial, sans-serif',
     },
